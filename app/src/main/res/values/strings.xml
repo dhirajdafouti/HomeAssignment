@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">GitUserFollowers</string>
+    <string name="action_settings">Settings</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="loading">Loading...</string>
+    <string name="language">Language: %s</string>
+    <string name="search_hint"> Search GitHub Repository</string>
+    <string name="no_results">No results 😓</string>
+    <string name="unknown">\?</string>
+    <string name="retry">Retry</string>
+    <string name="repository_name_title">Repository Name</string>
+    <string name="owner">Repository Owner</string>
+    <string name="user_profile_picture_description">The User profile picture description</string>
+    <string name="user_repo_created_at">Repository Creation Date</string>
+    <string name="user_repo_update_at">Repository Last Updated</string>
+    <string name="default_created_date" tools:ignore="TypographyDashes">2020–02-01</string>
+    <string name="open_web_url">Open the repo profile in Web</string>
+    <string name="user_repo_language">Language</string>
+    <string name="user_repo_description">Repository Description</string>
+    <string name="user_repo_star_count">Repository Star Counts</string>
+    <string name="user_forks_title">Repository Forks </string>
+    <string name="user_repo_watches_title">Repository Watchers Count</string>
+    <string name="loading1">Loading....</string>
+</resources>
