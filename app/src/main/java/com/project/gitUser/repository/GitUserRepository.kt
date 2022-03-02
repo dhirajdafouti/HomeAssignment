@@ -3,7 +3,6 @@ package com.project.gitUser.repository
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.project.gitUser.constants.Constants.IN_QUALIFIER
 import com.project.gitUser.constants.Constants.NETWORK_PAGE_SIZE
 import com.project.gitUser.database.getDataBase
 import com.project.gitUser.model.UserData
@@ -23,20 +22,20 @@ class GitUserRepository(private val application: Application) {
     // keep the last requested page. When the request is successful, increment the page number.
     private var lastRequestedPage = GITHUB_STARTING_PAGE_INDEX
 
-    private val _progresssBar: MutableLiveData<Boolean> = MutableLiveData(false)
-    val progressBar: LiveData<Boolean> get() = _progresssBar
+    private val _progressBar: MutableLiveData<Boolean> = MutableLiveData(false)
+    val progressBar: LiveData<Boolean> get() = _progressBar
 
     // avoid triggering multiple requests in the same time
     private var isRequestInProgress = false
 
     //The Suspend method will request for Search data to the Network.
-    suspend fun getSearchResultStream(queryString: String): MutableLiveData<GitUserSearchResult> {
-        _progresssBar.value = true
+    suspend fun getSearchResultStream(): MutableLiveData<GitUserSearchResult> {
+        _progressBar.value = true
         withContext(Dispatchers.IO) {
             deleteOlderDataBaseTables()
-            requestAndSaveToDataBase(queryString)
+            requestAndSaveToDataBase()
         }
-        _progresssBar.value = false
+        _progressBar.value = false
         return searchResults
     }
 
@@ -45,13 +44,11 @@ class GitUserRepository(private val application: Application) {
         dataBase.gitUserDao.deleteGitRepo()
     }
 
-    private suspend fun requestAndSaveToDataBase(query: String): Boolean {
+    private suspend fun requestAndSaveToDataBase(): Boolean {
         var successful = false
         isRequestInProgress = true
-        val apiQuery = query + IN_QUALIFIER
         try {
-            val response = GitUserService.retrofitApiService.searchRepos(
-                apiQuery,
+            val response = GitUserService.retrofitApiService.searchUser(
                 lastRequestedPage,
                 NETWORK_PAGE_SIZE
             )
@@ -90,9 +87,9 @@ class GitUserRepository(private val application: Application) {
     }
 
 
-    suspend fun requestMore(query: String) {
+    suspend fun requestMore() {
         if (isRequestInProgress) return
-        val successful = requestAndSaveToDataBase(query)
+        val successful = requestAndSaveToDataBase()
         if (successful) {
             lastRequestedPage++
         }

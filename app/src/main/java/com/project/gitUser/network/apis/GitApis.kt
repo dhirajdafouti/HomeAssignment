@@ -9,22 +9,12 @@ import retrofit2.http.Query
  *
  */
 interface GitApis {
-    //The Example Query1:
-    // https://api.github.com/search/repositories?sort=stars&q=Android&page=1&page_size=10
-    //The suspend function will search the repositories user based on the query.
-    @GET("search/repositories?sort=stars")
-    suspend fun searchRepos(
-        @Query("q") query: String,
-        @Query("page") page: Int,
-        @Query("per_page") itemsPerPage: Int
-    ): GitSearchResponse
 
     //The Example Query2:
-    //https://api.github.com/search/users?q=CodingRock-Star&page=1&page_size=10
+    // https://api.github.com/search/users?q=followers:>1000&page=1&page_size=10&sort=asc
     //The suspend function will fetch the search user based on the query.
-    @GET("search/user")
+    @GET("search/user?q=followers:>1000")
     suspend fun searchUser(
-        @Query("q") query: String,
         @Query("page") page: Int,
         @Query("per_page") itemsPerPage: Int
     ): GitSearchResponse

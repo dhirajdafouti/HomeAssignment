@@ -2,11 +2,9 @@ package com.project.gitUser.fragment.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,20 +18,24 @@ import com.project.gitUser.fragment.adapters.ReposAdapter
 import com.project.gitUser.utils.GitUserSearchResult
 import com.project.gitUser.viewmodel.MainViewModel
 import com.project.gitUser.viewmodel.ViewModelFactory
+import kotlinx.android.synthetic.main.fragment_main.*
 import timber.log.Timber
 
 
 class MainFragment : Fragment() {
     //Instance of View Binding
     private lateinit var binding: FragmentMainBinding
+    private lateinit var adapter: ReposAdapter
+
     //View Model InStance
     private val viewModel: MainViewModel by lazy {
-        val activity = requireNotNull(this.activity).application
+        val activity = requireActivity().application
         val viewModelFactory = ViewModelFactory(activity)
         ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
     }
 
-    lateinit var adapter: ReposAdapter
+
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,25 +61,20 @@ class MainFragment : Fragment() {
         binding.list.addItemDecoration(decoration)
         setupScrollListener()
         initAdapter()
-        val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
-        if (viewModel.repoResult.value == null) {
-            viewModel.searchGitRepository(query)
-        }
         viewModel.navigateToDetailFragment.observe(viewLifecycleOwner, Observer {
             it?.let{
                 this.findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
                 viewModel.shownAsteroidDetail()
             }
         })
-        initSearch(query)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            showEmptyList(true)
+            viewModel.searchUserWithMaximumFollowers()
+            binding.list.adapter!!.notifyDataSetChanged()
+            swipeRefreshLayout.isRefreshing=false
+        }
         return binding.root
     }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(LAST_SEARCH_QUERY, binding.searchRepo.text.trim().toString())
-    }
-
     /**
      * Initialize the Adapter.
      */
@@ -102,35 +99,15 @@ class MainFragment : Fragment() {
         })
     }
 
-    private fun initSearch(query: String) {
-        binding.searchRepo.setText(query)
 
-        binding.searchRepo.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_GO) {
-                updateRepoListFromInput()
-                true
-            } else {
-                false
-            }
-        }
-        binding.searchRepo.setOnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                updateRepoListFromInput()
-                true
-            } else {
-                false
-            }
-        }
-    }
-
-    private fun updateRepoListFromInput() {
-        binding.searchRepo.text.trim().let {
-            if (it.isNotEmpty()) {
-                binding.list.scrollToPosition(0)
-                viewModel.searchGitRepository(it.toString())
-            }
-        }
-    }
+//    private fun updateRepoListFromInput() {
+//        binding.searchRepo.text.trim().let {
+//            if (it.isNotEmpty()) {
+//                binding.list.scrollToPosition(0)
+//                viewModel.searchGitRepository()
+//            }
+//        }
+//    }
 
     private fun showEmptyList(show: Boolean) {
         if (show) {
@@ -161,4 +138,5 @@ class MainFragment : Fragment() {
         private const val DEFAULT_QUERY = "Android"
     }
 }
+
 

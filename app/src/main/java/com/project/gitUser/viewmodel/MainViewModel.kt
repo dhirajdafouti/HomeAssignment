@@ -9,7 +9,6 @@ import com.project.gitUser.model.UserData
 import com.project.gitUser.repository.GitUserRepository
 import com.project.gitUser.utils.GitUserSearchResult
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 //The View Model class which acts as a interface between the view and Data.
 class MainViewModel(private val application: Application) : ViewModel() {
@@ -39,28 +38,21 @@ class MainViewModel(private val application: Application) : ViewModel() {
     }
 
     fun setUserData(userData: UserData) {
-        if(userData!=null) {
-            _navigateToDetailFragment.value = userData
-        }else{
-         Timber.d("Nothing to set!!!")
-        }
+        _navigateToDetailFragment.value = userData
     }
 
     //search  based on query passed.
-    fun searchGitRepository(queryString: String) {
-        queryLiveData.value = queryString
+    fun searchUserWithMaximumFollowers() {
         viewModelScope.launch {
-            repository.getSearchResultStream(queryString)
+            repository.getSearchResultStream()
         }
     }
 
     fun listScrolled(visibleItemCount: Int, lastVisibleItemPosition: Int, totalItemCount: Int) {
         if (visibleItemCount + lastVisibleItemPosition + VISIBLE_THRESHOLD >= totalItemCount) {
-            val immutableQuery = queryLiveData.value
-            if (immutableQuery != null) {
                 viewModelScope.launch {
-                    repository.requestMore(immutableQuery)
-                }
+                    repository.requestMore()
+
             }
         }
     }

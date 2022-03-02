@@ -31,6 +31,7 @@ data class GitUserSearchInfo(
     @Json(name = "type") val profile_url: String?
 )
 
+
 data class NetworkGitUserSearchDataObject(var gitSearchResponse: List<GitUserSearchInfo>)
 
 
