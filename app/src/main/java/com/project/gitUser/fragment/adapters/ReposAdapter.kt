@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.project.gitUser.databinding.RepoViewItemBinding
 
-import com.project.gitUser.model.UserData
+import com.project.gitUser.model.UserFollower
 
 /**
  * Adapter for the list of repositories.
  */
 
 class ReposAdapter(val onclickListener: RepoAdapterOnClickListener) :
-    ListAdapter<UserData, ReposAdapter.ViewHolder>(AsteroidDiffCallback()) {
+    ListAdapter<UserFollower, ReposAdapter.ViewHolder>(UserFollowersDiffCallback()) {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userData = getItem(position)
         holder.bind(userData!!, onclickListener)
@@ -24,12 +24,12 @@ class ReposAdapter(val onclickListener: RepoAdapterOnClickListener) :
         return ViewHolder.from(parent)
     }
 
-    class AsteroidDiffCallback : DiffUtil.ItemCallback<UserData>() {
-        override fun areItemsTheSame(oldItem: UserData, newItem: UserData): Boolean {
+    class UserFollowersDiffCallback : DiffUtil.ItemCallback<UserFollower>() {
+        override fun areItemsTheSame(oldItem: UserFollower, newItem: UserFollower): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: UserData, newItem: UserData): Boolean {
+        override fun areContentsTheSame(oldItem: UserFollower, newItem: UserFollower): Boolean {
             return oldItem == newItem
         }
 
@@ -39,7 +39,7 @@ class ReposAdapter(val onclickListener: RepoAdapterOnClickListener) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
-            userData: UserData,
+            userData: UserFollower,
             clickOnClickListener: RepoAdapterOnClickListener
         ) {
             binding.userData = userData
@@ -56,7 +56,7 @@ class ReposAdapter(val onclickListener: RepoAdapterOnClickListener) :
         }
     }
 
-    class RepoAdapterOnClickListener(val clickListener: (userData: UserData) -> Unit) {
-        fun onClick(userData: UserData) = clickListener(userData)
+    class RepoAdapterOnClickListener(val clickListener: (userData: UserFollower) -> Unit) {
+        fun onClick(userData: UserFollower) = clickListener(userData)
     }
 }

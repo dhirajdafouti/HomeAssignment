@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.project.gitUser.model.UserData
+import com.project.gitUser.model.UserFollower
 import com.project.gitUser.repository.GitUserRepository
 import com.project.gitUser.utils.GitUserSearchResult
 import kotlinx.coroutines.launch
@@ -17,8 +17,8 @@ class MainViewModel(private val application: Application) : ViewModel() {
 
     private val repository = GitUserRepository(application)
 
-    private val _navigateToDetailFragment = MutableLiveData<UserData>()
-    val navigateToDetailFragment: LiveData<UserData>
+    private val _navigateToDetailFragment = MutableLiveData<UserFollower>()
+    val navigateToDetailFragment: LiveData<UserFollower>
         get() = _navigateToDetailFragment
 
 
@@ -37,7 +37,7 @@ class MainViewModel(private val application: Application) : ViewModel() {
         _navigateToDetailFragment.value = null
     }
 
-    fun setUserData(userData: UserData) {
+    fun setUserData(userData: UserFollower) {
         _navigateToDetailFragment.value = userData
     }
 
@@ -58,7 +58,7 @@ class MainViewModel(private val application: Application) : ViewModel() {
     }
 
     companion object {
-        private const val VISIBLE_THRESHOLD = 5
+        private const val VISIBLE_THRESHOLD = 2
     }
 
 }

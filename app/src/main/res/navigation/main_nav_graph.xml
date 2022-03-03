@@ -9,23 +9,23 @@
         android:name="com.project.gitUser.fragment.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_showDetail"
-            app:destination="@id/detailFragment" />
+<!--        <action-->
+<!--            android:id="@+id/action_showDetail"-->
+<!--            app:destination="@id/detailFragment" />-->
     </fragment>
 
-    <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.project.gitUser.fragment.details.DetailsFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_details">
+<!--    <fragment-->
+<!--        android:id="@+id/detailFragment"-->
+<!--        android:name="com.project.gitUser.fragment.details.DetailsFragment"-->
+<!--        android:label="fragment_detail"-->
+<!--        tools:layout="@layout/fragment_details">-->
 
-        <argument
-            android:name="userData"
-            app:argType="com.project.gitUser.model.UserData"/>
-        <action
-            android:id="@+id/action_detailFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
+<!--        <argument-->
+<!--            android:name="userData"-->
+<!--            app:argType="com.project.gitUser.model.UserFollower"/>-->
+<!--        <action-->
+<!--            android:id="@+id/action_detailFragment_to_mainFragment"-->
+<!--            app:destination="@id/mainFragment" />-->
+<!--    </fragment>-->
 
 </navigation>

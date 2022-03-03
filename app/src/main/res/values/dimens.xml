@@ -10,4 +10,5 @@
     <dimen name="error_text_size">24sp</dimen>
     <dimen name="text_size_title">20sp</dimen>
     <dimen name="text_size_value">18sp</dimen>
+    <dimen name="text_size">15sp</dimen>
 </resources>

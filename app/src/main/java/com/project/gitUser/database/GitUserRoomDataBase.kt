@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [GitUserDatabase::class],
+    entities = [GitUserFollowersEntity::class,GitUserInfoEntity::class],
     exportSchema = false,
     version = 1
 )
@@ -29,7 +29,7 @@ fun getDataBase(context: Context): GitUserRoomDataBase {
         if (!::INSTANCE.isInitialized) {
             INSTANCE = Room.databaseBuilder(
                 context.applicationContext,
-                GitUserRoomDataBase::class.java, "gitUserDataBase"
+                GitUserRoomDataBase::class.java, "gitUserFollower"
             ).fallbackToDestructiveMigration()
                 .build()
         }

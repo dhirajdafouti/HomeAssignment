@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.gitUser.constants.Constants.NETWORK_PAGE_SIZE
 import com.project.gitUser.database.getDataBase
-import com.project.gitUser.model.UserData
-import com.project.gitUser.network.NetworkGitUserSearchDataObject
-import com.project.gitUser.network.asDatabaseModel
+import com.project.gitUser.model.UserFollower
+import com.project.gitUser.network.remotemodel.NetworkGitUserSearchDataObject
+import com.project.gitUser.network.remotemodel.asDatabaseModel
 import com.project.gitUser.network.service.GitUserService
 import com.project.gitUser.utils.GitUserSearchResult
 import kotlinx.coroutines.Dispatchers
@@ -41,36 +41,27 @@ class GitUserRepository(private val application: Application) {
 
     //Method will delete all the tables before fetching the new queries.
     private suspend fun deleteOlderDataBaseTables() {
-        dataBase.gitUserDao.deleteGitRepo()
+        dataBase.gitUserDao.deleteUserFollowers()
     }
 
     private suspend fun requestAndSaveToDataBase(): Boolean {
         var successful = false
         isRequestInProgress = true
         try {
-            val response = GitUserService.retrofitApiService.searchUser(
+            val response = GitUserService.retrofitApiService.searchUserFollowers(
                 lastRequestedPage,
                 NETWORK_PAGE_SIZE
             )
             val repos = response.items ?: emptyList()
-            dataBase.gitUserDao.insert(NetworkGitUserSearchDataObject(repos).asDatabaseModel())
-            val data = dataBase.gitUserDao.reposByName()
+            dataBase.gitUserDao.insertUserFollowers(NetworkGitUserSearchDataObject(repos).asDatabaseModel())
+            val data = dataBase.gitUserDao.queryUserFollowers()
 
-            var listOfVehicleNames: List<UserData> = emptyList()
+            var listOfVehicleNames: List<UserFollower> = emptyList()
             listOfVehicleNames = data.map {
-                UserData(
+                UserFollower(
                     id = it.id,
-                    name = it.name,
-                    fullName = it.fullName,
-                    description = it.description,
+                    loginName = it.loginName,
                     url = it.url,
-                    web_url = it.web_url,
-                    stars = it.stars,
-                    forks = it.forks,
-                    language = it.language,
-                    watcherCount = it.watcherCount,
-                    createdAt = it.createdAt,
-                    updated = it.updated,
                     profileUrl = it.avatar_url
                 )
             }

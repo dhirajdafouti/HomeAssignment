@@ -6,47 +6,59 @@
 
         <variable
             name="userData"
-            type="com.project.gitUser.model.UserData" />
+            type="com.project.gitUser.model.UserFollower" />
 
         <variable
             name="clickListener"
             type="com.project.gitUser.fragment.adapters.ReposAdapter.RepoAdapterOnClickListener" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:background="@color/text_grey"
-    android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/row_item_margin_horizontal"
-    android:onClick="@{() -> clickListener.onClick(userData)}"
-    android:paddingTop="@dimen/row_item_margin_vertical"
-    tools:ignore="UnusedAttribute">
-
-    <TextView
-        android:id="@+id/repo_name"
-        android:layout_width="0dp"
-        android:text="@{userData.component2()}"
+    <androidx.cardview.widget.CardView
+        style="@style/CardView.Light"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/titleColor"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="android-architecture"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
 
-    <TextView
-        android:id="@+id/repo_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:maxLines="10"
-        android:text="@{userData.component4()}"
-        android:paddingVertical="@dimen/row_item_margin_vertical"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="@dimen/repo_description_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repo_name"
-        tools:ignore="UnusedAttribute"
-        tools:text="A collection of samples to discuss and showcase different architectural tools and patterns for Android apps."/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+       <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/avatar_url"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="H,16:9"
+                app:layout_constraintTop_toTopOf="parent"
+                app:imageUrl="@{userData.profileUrl}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/repo_name"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/repo_name"
+                android:layout_width="0dp"
+                android:textAllCaps="true"
+                android:textSize="@dimen/text_size"
+                android:text="@{userData.component2()}"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#DE000000"
+                android:lineSpacingExtra="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/avatar_url"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 </layout>

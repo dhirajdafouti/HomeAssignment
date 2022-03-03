@@ -1,7 +1,9 @@
 package com.project.gitUser.network.apis
 
-import com.project.gitUser.network.GitSearchResponse
+import com.project.gitUser.network.remotemodel.GitUserFollowersResponse
+import com.project.gitUser.network.remotemodel.UserInfoRemoteModel
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -10,12 +12,16 @@ import retrofit2.http.Query
  */
 interface GitApis {
 
-    //The Example Query2:
-    // https://api.github.com/search/users?q=followers:>1000&page=1&page_size=10&sort=asc
-    //The suspend function will fetch the search user based on the query.
-    @GET("search/user?q=followers:>1000")
-    suspend fun searchUser(
+    //The Example Api1:
+    //https://api.github.com/search/users?q=followers:>1000&page=1&page_size=10&sort=asc
+    @GET("search/users?q=followers:>1000")
+    suspend fun searchUserFollowers(
         @Query("page") page: Int,
         @Query("per_page") itemsPerPage: Int
-    ): GitSearchResponse
+    ): GitUserFollowersResponse
+
+    //The Example Api2:
+    //https://api.github.com/users/torvalds
+    @GET("users/{user}")
+    suspend fun userInfo(@Path("user") user: String):UserInfoRemoteModel
 }
