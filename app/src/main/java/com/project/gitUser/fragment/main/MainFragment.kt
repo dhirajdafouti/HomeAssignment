@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.gitUser.databinding.FragmentMainBinding
@@ -56,16 +56,18 @@ class MainFragment : Fragment() {
                 binding.statusLoadingWheel.visibility = View.GONE
             }
         })
+        binding.list.layoutManager= GridLayoutManager(this.context, 2, RecyclerView.VERTICAL, false)
         // add dividers between RecyclerView's row items
         val decoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         binding.list.addItemDecoration(decoration)
         setupScrollListener()
         initAdapter()
+        viewModel.searchUserWithMaximumFollowers()
         viewModel.navigateToDetailFragment.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                this.findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
-                viewModel.shownAsteroidDetail()
-            }
+//            it?.let{
+//                this.findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
+//                viewModel.shownAsteroidDetail()
+//            }
         })
         binding.swipeRefreshLayout.setOnRefreshListener {
             showEmptyList(true)
@@ -100,15 +102,6 @@ class MainFragment : Fragment() {
     }
 
 
-//    private fun updateRepoListFromInput() {
-//        binding.searchRepo.text.trim().let {
-//            if (it.isNotEmpty()) {
-//                binding.list.scrollToPosition(0)
-//                viewModel.searchGitRepository()
-//            }
-//        }
-//    }
-
     private fun showEmptyList(show: Boolean) {
         if (show) {
             binding.emptyList.visibility = View.VISIBLE
@@ -120,7 +113,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setupScrollListener() {
-        val layoutManager = binding.list.layoutManager as LinearLayoutManager
+        val layoutManager = binding.list.layoutManager as GridLayoutManager
         binding.list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -133,10 +126,6 @@ class MainFragment : Fragment() {
         })
     }
 
-    companion object {
-        private const val LAST_SEARCH_QUERY: String = "last_search_query"
-        private const val DEFAULT_QUERY = "Android"
-    }
 }
 
 
