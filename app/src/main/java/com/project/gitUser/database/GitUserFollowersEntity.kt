@@ -5,6 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 
+
+
 /**
  * Entity class for the which defines the Git Table in the GitUser DataBase.
  */
