@@ -26,7 +26,7 @@ class DetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.navigateToDetailFragment.observe(viewLifecycleOwner,Observer<UserFollower>{
+        viewModel.navigateToDetailFragment.observe(this,Observer<UserFollower>{
             viewModel.requestUserInfo(it.loginName?:"")
         })
     }
