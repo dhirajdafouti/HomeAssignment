@@ -49,6 +49,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72"
+    
+
+    // Kotlin
+    implementation("androidx.fragment:fragment-ktx:1.4.1")
 
     // Support libraries
     implementation "androidx.appcompat:appcompat:$version_appcompat"

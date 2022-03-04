@@ -18,7 +18,7 @@
     <string name="user_repo_update_at">Repository Last Updated</string>
     <string name="default_created_date" tools:ignore="TypographyDashes">2020–02-01</string>
     <string name="open_web_url">Open the repo profile in Web</string>
-    <string name="user_repo_language">Language</string>
+    <string name="user_repo_language">Location</string>
     <string name="user_repo_description">Repository Description</string>
     <string name="user_repo_star_count">Repository Star Counts</string>
     <string name="user_forks_title">Repository Forks </string>

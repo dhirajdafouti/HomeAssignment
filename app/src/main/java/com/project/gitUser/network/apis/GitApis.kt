@@ -23,5 +23,5 @@ interface GitApis {
     //The Example Api2:
     //https://api.github.com/users/torvalds
     @GET("users/{user}")
-    suspend fun userInfo(@Path("user") user: String):UserInfoRemoteModel
+    suspend fun userInfo(@Path("user") user: String?):UserInfoRemoteModel
 }

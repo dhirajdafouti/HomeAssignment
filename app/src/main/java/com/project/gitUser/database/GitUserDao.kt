@@ -1,6 +1,8 @@
 package com.project.gitUser.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.project.gitUser.model.UserInfo
 import retrofit2.http.DELETE
 
 /**
@@ -24,4 +26,7 @@ interface GitUserDao {
 
     @Query("DELETE FROM UserInfoTable")
     suspend fun deleteUserInfo()
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    @Query("SELECT *FROM UserInfoTable")
+    suspend fun queryUserDetails():GitUserInfoEntity
 }

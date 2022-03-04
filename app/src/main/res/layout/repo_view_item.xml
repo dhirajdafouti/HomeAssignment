@@ -15,6 +15,7 @@
 
     <androidx.cardview.widget.CardView
         style="@style/CardView.Light"
+        android:onClick="@{()->clickListener.onClick(userData)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
